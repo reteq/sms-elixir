@@ -11,14 +11,19 @@ defmodule Sms do
   		GenServer.start_link(__MODULE__, [], name: @name)
   	end
 
+  	@spec start_link_raw :: GenServer.on_start
+  	def start_link_raw do
+  		GenServer.start_link(__MODULE__, [])
+  	end
+
   	@doc """
   	Send sms to phone number.
 
   	If failed, will response with reason
   	"""
-  	@spec send(phone :: String.t, message :: String.t) :: {:ok} | {:error, String.t}
-  	def send(phone, message) do
-  		GenServer.call(@name, {:send, phone, message})
+  	@spec send(phone :: String.t, message :: String.t, server :: GenServer.on_start) :: {:ok} | {:error, String.t}
+  	def send(phone, message, server \\ @name) do
+  		GenServer.call(server, {:send, phone, message})
   	end
 
   	def init(_) do

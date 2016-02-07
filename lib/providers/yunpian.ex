@@ -1,4 +1,4 @@
-defmodule Sms.Yunpan do
+defmodule Sms.Yunpian do
 	@behaviour Sms.SmsProvider
 
 	def send(phone, content) do
