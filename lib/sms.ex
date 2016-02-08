@@ -23,7 +23,7 @@ defmodule Sms do
   	"""
   	@spec send(phone :: String.t, message :: String.t, server :: GenServer.on_start) :: {:ok} | {:error, String.t}
   	def send(phone, message, server \\ @name) do
-  		GenServer.call(server, {:send, phone, message})
+  		GenServer.call(server, {:send, phone, message}, 30000)
   	end
 
   	def init(_) do
