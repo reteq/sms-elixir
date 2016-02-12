@@ -7,34 +7,46 @@ defmodule Sms.Yunpian do
 	@tpl_send_url "/tpl_send.json"
 
 	def process_url(url) do
-		"http://yunpian.com/v1/sms" <> url
+		"http://sms.yunpian.com/v1/sms" <> url
 	end
 
-	def process_request_body(body) do
-		Poison.encode!(body)
-	end
+	@doc """
+	error response example: 
+		"{\"code\":1,\"msg\":\"请求参数缺失\",\"detail\":\"参数 apikey 必须传入\"}"
+		"{\"code\":5,\"msg\":\"未找到匹配的模板\",\"detail\":\"未自动匹配到合适的模板\"}"
+	"""
+	def send(phone, content, options \\ []) do
+		password = Application.get_env(:sms, :apikey)
 
-	def send(phone, content) do
-		username = Application.get_env(:sms, :username)
-		password = Application.get_env(:sms, :password)
+		if password do
+			req_headers = %{"Accept" => "application/json; charset=utf-8;",
+				"Content-type" => "application/x-www-form-urlencoded;charset=utf-8;"}
 
-		if username && password do
-			options = %{
-				username: username, 
-				password: password,
-				apikey: password}
+			body = {:form, [mobile: phone, 
+				text: content,
+				apikey: password] ++ options}
 
-			body = %{
-				mobile: phone,
-				tpl_value: content}
+			response = post(@send_url, body, req_headers)
 
-			{:ok, %HTTPoison.Response{status_code: code,
-				headers: _headers,
-                body: resp_body}} = post(@send_url, body, options)
-
-        	{code == 200 && :ok || :error, resp_body}
+			case(response) do
+				{:ok, %HTTPoison.Response{status_code: code,
+					headers: headers,
+                	body: resp_body}} ->
+                		try do
+            				json = Poison.decode!(resp_body)
+            				case(json) do
+            					%{"code" => 0, "msg" => _msg, "result" => result} -> {:ok, result}
+            					%{"code" => _code, "msg" => _msg} -> {:error, json}
+            			end
+            		rescue
+            			_e -> {:error, resp_body}
+		            catch
+		            	_e -> {:error, resp_body}
+		            end
+                {:error, reason} -> {:error, reason}
+			end
     	else
-    		{:error, "no username or password set in config"}
+    		{:error, "no apikey set in config"}
 		end
 	end
 end

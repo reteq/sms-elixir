@@ -4,5 +4,5 @@ defmodule Sms.SmsProvider do
 	@doc """
 	interface for sms provider which can be set in config.exs
 	"""
-	defcallback  send(String.t, String.t) ::  {:ok, any} | {:error, any}
+	defcallback  send(String.t, String.t, Any) ::  {:ok, any} | {:error, any}
 end
