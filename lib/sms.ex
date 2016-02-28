@@ -24,7 +24,7 @@ defmodule Sms do
 
   	If failed, will response with reason
   	"""
-  	@spec send(phone :: String.t, message :: String.t, server :: GenServer.on_start) :: {:ok} | {:error, String.t}
+  	@spec send(phone :: String.t, message :: String.t, server :: GenServer.on_start) :: {:ok, any} | {:error, any}
   	def send(phone, message, options \\ [], server \\ @name) do
   		GenServer.call(server, {:send, phone, message, options}, @timeout)
   	end
