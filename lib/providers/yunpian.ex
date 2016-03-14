@@ -16,9 +16,8 @@ defmodule Sms.Yunpian do
 		"{\"code\":5,\"msg\":\"未找到匹配的模板\",\"detail\":\"未自动匹配到合适的模板\"}"
 	"""
 	def send(phone, content, options \\ []) do
-		password = Application.get_env(:sms, :apikey)
-
-		if password do
+    password = Application.get_env(:sms, :apikey)
+    if password do
       req_headers = %{"Accept" => "application/json; charset=utf-8;",
       "Content-type" => "application/x-www-form-urlencoded;charset=utf-8;"}
 
@@ -27,7 +26,7 @@ defmodule Sms.Yunpian do
       apikey: password] ++ options}
 
       response = post(@send_url, body, req_headers)
-      
+
 			case(response) do
 				{:ok, %HTTPoison.Response{status_code: code,
 					headers: headers,
