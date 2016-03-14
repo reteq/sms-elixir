@@ -31,19 +31,17 @@ defmodule Sms.Yunpian do
 			case(response) do
 				{:ok, %HTTPoison.Response{status_code: code,
 					headers: headers,
-                	body: resp_body}} ->
-                		try do
-            				json = Poison.decode!(resp_body)
-            				case(json) do
-            					%{"code" => 0, "msg" => _msg, "result" => result} -> {:ok, result}
-            					%{"code" => _code, "msg" => _msg} -> {:error, json}
-            			end
-            		rescue
-            			_e -> {:error, resp_body}
-		            catch
-		            	_e -> {:error, resp_body}
-		            end
-                {:error, reason} -> {:error, reason}
+          body: resp_body}} ->
+            try do
+              json = Poison.decode!(resp_body)
+              case(json) do
+                %{"code" => 0, "msg" => _msg, "result" => result} -> {:ok, result}
+                %{"code" => _code, "msg" => _msg} -> {:error, json}
+              end
+            rescue
+              _e -> {:error, resp_body}
+            end
+        {:error, reason} -> {:error, reason}
 			end
     	else
     		{:error, "no apikey set in config"}
