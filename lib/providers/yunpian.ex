@@ -19,15 +19,15 @@ defmodule Sms.Yunpian do
 		password = Application.get_env(:sms, :apikey)
 
 		if password do
-			req_headers = %{"Accept" => "application/json; charset=utf-8;",
-				"Content-type" => "application/x-www-form-urlencoded;charset=utf-8;"}
+      req_headers = %{"Accept" => "application/json; charset=utf-8;",
+      "Content-type" => "application/x-www-form-urlencoded;charset=utf-8;"}
 
-			body = {:form, [mobile: phone, 
-				text: content,
-				apikey: password] ++ options}
+      body = {:form, [mobile: phone, 
+      text: content,
+      apikey: password] ++ options}
 
-			response = post(@send_url, body, req_headers)
-
+      response = post(@send_url, body, req_headers)
+      
 			case(response) do
 				{:ok, %HTTPoison.Response{status_code: code,
 					headers: headers,
@@ -43,8 +43,8 @@ defmodule Sms.Yunpian do
             end
         {:error, reason} -> {:error, reason}
 			end
-    	else
-    		{:error, "no apikey set in config"}
-		end
+    else
+      {:error, "no apikey set in config"}
+    end
 	end
 end
