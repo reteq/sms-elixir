@@ -1,21 +1,21 @@
 defmodule Sms.Yunpian do
-	@behaviour Sms.SmsProvider
-	use HTTPoison.Base
+  @behaviour Sms.SmsProvider
+  use HTTPoison.Base
 
-	@get_url "/get.json"	
-	@send_url "/send.json"	
-	@tpl_send_url "/tpl_send.json"
+  @get_url "/get.json"  
+  @send_url "/send.json"  
+  @tpl_send_url "/tpl_send.json"
 
-	def process_url(url) do
-		"http://sms.yunpian.com/v1/sms" <> url
-	end
+  def process_url(url) do
+    "http://sms.yunpian.com/v1/sms" <> url
+  end
 
-	@doc """
-	error response example: 
-		"{\"code\":1,\"msg\":\"请求参数缺失\",\"detail\":\"参数 apikey 必须传入\"}"
-		"{\"code\":5,\"msg\":\"未找到匹配的模板\",\"detail\":\"未自动匹配到合适的模板\"}"
-	"""
-	def send(phone, content, options \\ []) do
+  @doc """
+  error response example: 
+    "{\"code\":1,\"msg\":\"请求参数缺失\",\"detail\":\"参数 apikey 必须传入\"}"
+    "{\"code\":5,\"msg\":\"未找到匹配的模板\",\"detail\":\"未自动匹配到合适的模板\"}"
+  """
+  def send(phone, content, options \\ []) do
     password = Application.get_env(:sms, :apikey)
     if password do
       req_headers = %{"Accept" => "application/json; charset=utf-8;",
@@ -27,9 +27,9 @@ defmodule Sms.Yunpian do
 
       response = post(@send_url, body, req_headers)
 
-			case(response) do
-				{:ok, %HTTPoison.Response{status_code: code,
-					headers: headers,
+      case(response) do
+        {:ok, %HTTPoison.Response{status_code: code,
+          headers: headers,
           body: resp_body}} ->
             try do
               json = Poison.decode!(resp_body)
@@ -41,9 +41,9 @@ defmodule Sms.Yunpian do
               _e -> {:error, resp_body}
             end
         {:error, reason} -> {:error, reason}
-			end
+      end
     else
       {:error, "no apikey set in config"}
     end
-	end
+  end
 end
