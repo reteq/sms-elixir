@@ -3,7 +3,7 @@ defmodule Sms.LogOnly do
   require Logger
   
   def send(phone, content, options \\ []) do
-    Logger.info("Sending SMS to #{phone} with content: #{content}")
+    Logger.debug("Sending SMS to #{phone} with content: #{content}")
     {:ok, "logged"}
   end
 end
