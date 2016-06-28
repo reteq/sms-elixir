@@ -30,7 +30,7 @@ defmodule Sms.Mixfile do
   defp deps do
     [
      {:poison, "~> 1.5", override: true},
-     {:httpoison, "~> 0.8.1"}
+     {:httpoison, "~> 0.8"}
     ]
   end
 end
