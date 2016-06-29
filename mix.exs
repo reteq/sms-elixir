@@ -38,7 +38,8 @@ defmodule Sms.Mixfile do
   defp package do
     [
       name: :sms,
-      files: ["lib", "README*", "readme*", "LICENSE*", "license*"],
+      files: ["mix.exs", "lib", "README*", "LICENSE*"],
+      maintainers: ["Tsung Wu"],
       licenses: ["Apache 2.0"],
       links: %{"GitHub" => "https://github.com/reteq/sms-elixir"}
     ]
