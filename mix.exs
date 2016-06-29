@@ -8,6 +8,7 @@ defmodule Sms.Mixfile do
      elixir: "~> 1.2",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     package: package,
      deps: deps]
   end
 
@@ -29,8 +30,17 @@ defmodule Sms.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-     {:poison, "~> 1.5", override: true},
-     {:httpoison, "~> 0.8.1"}
+     {:poison, "~> 2.2.0"},
+     {:httpoison, "~> 0.9.0"}
+    ]
+  end
+
+  defp package do
+    [
+      name: :sms,
+      files: ["lib", "README*", "readme*", "LICENSE*", "license*"],
+      licenses: ["Apache 2.0"],
+      links: %{"GitHub" => "https://github.com/reteq/sms-elixir"}
     ]
   end
 end
