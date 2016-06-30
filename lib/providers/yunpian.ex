@@ -2,8 +2,8 @@ defmodule Sms.Yunpian do
   @behaviour Sms.SmsProvider
   use HTTPoison.Base
 
-  @get_url "/get.json"  
-  @send_url "/send.json"  
+  @get_url "/get.json"
+  @send_url "/send.json"
   @tpl_send_url "/tpl_send.json"
 
   def process_url(url) do
@@ -28,8 +28,8 @@ defmodule Sms.Yunpian do
       response = post(@send_url, body, req_headers)
 
       case(response) do
-        {:ok, %HTTPoison.Response{status_code: code,
-          headers: headers,
+        {:ok, %HTTPoison.Response{status_code: _code,
+          headers: _headers,
           body: resp_body}} ->
             try do
               json = Poison.decode!(resp_body)
