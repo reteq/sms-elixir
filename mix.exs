@@ -8,8 +8,8 @@ defmodule Sms.Mixfile do
      elixir: "~> 1.2",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     package: package,
-     deps: deps]
+     package: package(),
+     deps: deps()]
   end
 
   # Configuration for the OTP application
@@ -30,8 +30,9 @@ defmodule Sms.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-     {:poison, "~> 2.2.0"},
-     {:httpoison, "~> 0.9.0"}
+     {:poison, "~> 3.1"},
+     {:httpoison, "~> 0.11"},
+     {:ex_doc, ">= 0.0.0", only: :dev}
     ]
   end
 

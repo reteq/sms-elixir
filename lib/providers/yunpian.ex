@@ -23,8 +23,8 @@ defmodule Sms.Yunpian do
       response = post(@send_url, body)
 
       case(response) do
-        {:ok, %HTTPoison.Response{status_code: code,
-          headers: headers,
+        {:ok, %HTTPoison.Response{status_code: _code,
+          headers: _headers,
           body: resp_body}} ->
             try do
               json = Poison.decode!(resp_body)

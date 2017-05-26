@@ -26,11 +26,11 @@ defmodule SmsTest do
   end
 
   test "without apikey", %{pid: _pid} do
-  	assert {:error, "no apikey set in config"} == Sms.send("12345678901", "fun at reteq", [tpl_id: 2])
+  	assert {:error, "no apikey set in config"} == Sms.send("12345678901", "fun at reteq")
   end
 
   @tag :yunpian
   test "yunpian" do
-  	assert {:ok, _} = Sms.send("12345678901", "fun at reteq", [tpl_id: 2])
+  	assert {:ok, _} = Sms.send("12345678901", "fun at reteq")
   end
 end
