@@ -3,7 +3,7 @@ defmodule Sms.Mixfile do
 
   def project do
     [app: :sms,
-     version: "0.0.1",
+     version: "0.0.2",
      description: "SMS service APIs for Elixir",
      elixir: "~> 1.2",
      build_embedded: Mix.env == :prod,
